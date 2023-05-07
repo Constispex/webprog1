@@ -1,35 +1,40 @@
 <?php
 //require "Result.php";
+require "DbHandler.php";
 $ok = true;
 
-
-/*if (isset($_GET["title"]) && $_GET["title"] !== "") {
+$sqlQuery = array();
+if (isset($_GET["title"]) && $_GET["title"] !== "") {
     $str = "title LIKE '%" . $_GET["title"] . "%'";
-    array_push($filters, $str);
+    $sqlQuery[] = $str;
 }
 if (isset($_GET["author"]) && $_GET["author"] !== "") {
     $str = "author LIKE '%" . $_GET["author"] . "%'";
-    array_push($filters, $str);
+    $sqlQuery[] = $str;
 }
 if (isset($_GET["publisher"]) && $_GET["publisher"] !== "") {
     $str = "publisher LIKE '%" . $_GET["publisher"] . "%'";
-    array_push($filters, $str);
-}
-if (isset($_GET["rating"]) && $_GET["rating"] !== "") {
-    $str = "rating = " . $_GET["rating"];
-    array_push($filters, $str);
+    $sqlQuery[] = $str;
 }
 if (isset($_GET["subareas"]) && $_GET["subareas"] !== "") {
     $str = "subareas LIKE '%" . $_GET["subareas"] . "%'";
-    array_push($filters, $str);
-}*/
-
-
-$title = $_GET["title"] ?? "no title";
-$s = json_encode($title);
-if ($s === false) {
-    $ok = false;
-    echo "json_encode failed";
-} else {
-    echo $s;
+    $sqlQuery[] = $str;
 }
+if (isset($_GET["rating"]) && $_GET["rating"] !== "") {
+    $str = "rating >= " . $_GET["rating"];
+    $sqlQuery[] = $str;
+}
+$handler = new DbHandler();
+
+
+if (isset($_GET["sort"]) && $_GET["sort"] !== "") {
+    $sort = $_GET["sort"];
+    if ($sort === "name") $sort = "title";
+    $items = $handler->getSortedItems($sqlQuery, $sort);
+
+} else {
+    $items = $handler->getItems($sqlQuery);
+}
+
+
+echo json_encode($items);

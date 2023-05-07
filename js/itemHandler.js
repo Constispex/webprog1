@@ -1,16 +1,17 @@
 let ajax = new XMLHttpRequest();
 ajax.onreadystatechange = receiveJson;
 
-function startAjaxFilter(form) {
+function startAjax(form, value) {
     "use strict";
-    let param = '../php/showItems.php?title=' + form.bookFilterName.value
-    ajax.open('GET', param, true);
-    ajax.send();
-}
+    let param = '../php/showItems.php?title=' + form.bookFilterName.value +
+        '&author=' + form.bookFilterAuthor.value +
+        '&publisher=' + form.bookFilterPublisher.value +
+        '&subareas=' + form.bookFilterSubareas.value +
+        '&rating=' + form.bookFilterRating.value;
 
-function startAjaxSort(form) {
-    "use strict";
-    let param = 'showItems.php?sort=' + form.sort.value;
+    if (value.length > 0) {
+        param += '&sort=' + value;
+    }
     ajax.open('GET', param, true);
     ajax.send();
 }
@@ -19,14 +20,27 @@ function receiveJson() {
     "use strict";
     let input = document.getElementById('bookList')
     if (ajax.readyState === 4) {
-        input.innerHTML += ajax.responseText;
-        let resultDiv = document.getElementById('bookList');
-        let res = JSON.parse(ajax.responseText);
-        alert(resultDiv.innerHTML);
-        input.innerHTML += ajax.statusText;
-        input.innerHTML += ajax.status;
+        let result = JSON.parse(ajax.responseText);
+        let table = "<table class='table table-striped table-hover table-bordered'>";
+
+        table += "<tr>";
+        table += "<th>Titel</th>";
+        table += "<th>Autor</th>";
+        table += "<th>Verlag</th>";
+        table += "<th>Unterbereich</th>";
+        table += "<th>Bewertung</th>";
+        for (let i = 0; i < result.length; i++) {
+            table += "<tr> <td>" + result[i].title + "</td>";
+            table += "<td>" + result[i].author + "</td>";
+            table += "<td>" + result[i].publisher + "</td>";
+            table += "<td>" + result[i].subareas + "</td>";
+            table += "<td>" + result[i].rating + "</td> </tr>";
+        }
+        input.innerHTML += "<br>";
+        input.innerHTML = table;
+        input.innerHTML += result;
 
     } else {
-        let resultDiv = document.getElementById('bookList');
+        input.innerHTML = "Lade...";
     }
 }

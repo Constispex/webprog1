@@ -14,22 +14,18 @@
         Book-name: <input name="bookFilterName" type="text" value="t"> <br>
         Author: <input name="bookFilterAuthor" type="text" value="">
         Publisher: <input name="bookFilterPublisher" type="text" value="">
-        Subarea: <input name="bookFilterSubarea" type="text" value="">
+        Subarea: <input name="bookFilterSubareas" type="text" value="">
         Min-Rating <input name="bookFilterRating" type="number" value="1">
         <br>
-        <input onclick="startAjaxFilter(this.form)" type="button" value="submit">
+        <input onclick="startAjax(this.form, '')" type="button" value="submit">
     </fieldset>
-
-</form>
-
-<form>
     <fieldset>
         <legend>Sort</legend>
-        <input name="sort" type="button" value="name">
-        <input name="sort" type="button" value="author">
-        <input name="sort" type="button" value="publisher">
-        <input name="sort" type="button" value="subareas">
-        <input name="sort" type="button" value="price">
+        <input name="bookSort" onclick="startAjax(this.form, this.value)" type="button" value="name">
+        <input name="bookSort" onclick="startAjax(this.form, this.value)" type="button" value="author">
+        <input name="bookSort" onclick="startAjax(this.form, this.value)" type="button" value="publisher">
+        <input name="bookSort" onclick="startAjax(this.form, this.value)" type="button" value="subareas">
+        <input name="bookSort" onclick="startAjax(this.form, this.value)" type="button" value="rating">
     </fieldset>
 </form>
 <div id="bookList">
