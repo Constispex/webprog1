@@ -1,5 +1,4 @@
 <?php
-//require "Result.php";
 require "DbHandler.php";
 $ok = true;
 
@@ -26,15 +25,13 @@ if (isset($_GET["rating"]) && $_GET["rating"] !== "") {
 }
 $handler = new DbHandler();
 
-
 if (isset($_GET["sort"]) && $_GET["sort"] !== "") {
     $sort = $_GET["sort"];
     if ($sort === "name") $sort = "title";
     $items = $handler->getSortedItems($sqlQuery, $sort);
 
 } else {
-    $items = $handler->getItems($sqlQuery);
+    $items = $handler->getFilteredItems($sqlQuery);
 }
-
 
 echo json_encode($items);
