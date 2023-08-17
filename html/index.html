@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <title>DBMS</title>
@@ -11,25 +11,25 @@
 <form>
     <fieldset>
         <legend>Filter</legend>
-        Book-name: <input name="bookFilterName" type="text" value="t"> <br>
-        Author: <input name="bookFilterAuthor" type="text" value="">
-        Publisher: <input name="bookFilterPublisher" type="text" value="">
-        Subarea: <input name="bookFilterSubareas" type="text" value="">
-        Min-Rating <input name="bookFilterRating" type="number" value="1">
+        Name: <input name="bikeFilterName" type="text" value=""> <br>
+        Max-Preis: <input name="bikeFilterPrice" type="range" min="1" max="5000" oninput="this.nextElementSibling.value = this.value"> <output>0</output>€ <br>
+        Größe: <input name="bikeFilterSize" type="number" min="0" value="0"> <br>
+        Elektroantrieb: <input name="bikeFilterElektro" type="checkbox"> <br>
+        Beleuchtung: <input name="bikeFilterBeleuchtung" type="checkbox"> <br>
         <br>
         <input onclick="startAjax(this.form, '')" type="button" value="submit">
     </fieldset>
     <fieldset>
         <legend>Sort</legend>
-        <input name="bookSort" onclick="startAjax(this.form, this.value)" type="button" value="name">
-        <input name="bookSort" onclick="startAjax(this.form, this.value)" type="button" value="author">
-        <input name="bookSort" onclick="startAjax(this.form, this.value)" type="button" value="publisher">
-        <input name="bookSort" onclick="startAjax(this.form, this.value)" type="button" value="subareas">
-        <input name="bookSort" onclick="startAjax(this.form, this.value)" type="button" value="rating">
+        <input name="bikeSort" onclick="startAjax(this.form, this.value)" type="button" value="name">
+        <input name="bikeSort" onclick="startAjax(this.form, this.value)" type="button" value="preis">
+        <input name="bikeSort" onclick="startAjax(this.form, this.value)" type="button" value="gewicht">
     </fieldset>
+
+    <div id="bikeList">
+        <h1>Start</h1>
+    </div>
 </form>
-<div id="bookList">
-    <h1>LOOOL</h1>
-</div>
+
 </body>
 </html>

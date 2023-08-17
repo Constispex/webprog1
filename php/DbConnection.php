@@ -1,7 +1,7 @@
 <?php
 $db_servername = "localhost";
-$db_database = "informatik";
-$db_tableName = "buecher";
+$db_database = "webprog";
+$db_tableName = "fahrrad";
 $db_username = "root";
 $db_password = "";
 $db_port = "3306";

@@ -1,6 +1,6 @@
 <?php
-require "DbConnection.php";
-require "Book.php";
+include "DbConnection.php";
+include "Bike.php";
 
 class DbHandler {
 
@@ -9,11 +9,13 @@ class DbHandler {
      * @param $result mysqli_result
      * @return array of Book objects
      */
-    function resultToArray($result): array {
+    private function resultToArray(mysqli_result $result): array {
         $items = array();
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $item = new Book($row["Title"], $row["Author"], $row["Publisher"], $row["Rating"], $row["Subareas"]);
+                $item = new Bike($row["TYP"], $row["BEZ"], $row["PREIS"], $row["GEWICHT"],
+                    $row["RADGROESSE"], $row["GAENGE"], $row["ELEKTRO"], $row["BREMSE"],
+                    $row["BELEUCHTUNG"], $row["BILD"], $row["RAHMENHOEHE"]);
                 $items[] = $item;
             }
         }
@@ -25,9 +27,12 @@ class DbHandler {
      * @param $query string
      * @return mysqli_result|bool the result of the query
      */
-    function executeQuery(string $query): mysqli_result|bool {
+    public function executeQuery(string $query): mysqli_result|bool {
         $conn = connectToDb();
         $result = $conn->query($query);
+        if (!$result) {
+            die("Query failed: " . $conn->error . "<br>Query: " . $query);
+        }
         $conn->close();
         return $result;
     }
@@ -35,8 +40,8 @@ class DbHandler {
     /**
      * @return array of Book objects
      */
-    function getFilteredItems($filters): array {
-        $query = "SELECT * FROM buecher";
+    public function getFilteredItems($filters): array {
+        $query = "SELECT * FROM fahrrad";
         if (count($filters) > 0) {
             $query .= " WHERE ";
             foreach ($filters as $filter) {
@@ -57,7 +62,7 @@ class DbHandler {
      * @return array
      */
     public function getSortedItems(array $filters, string $sort): array {
-        $query = "SELECT * FROM buecher";
+        $query = "SELECT * FROM fahrrad";
         if (count($filters) > 0) {
             $query .= " WHERE ";
             foreach ($filters as $filter) {

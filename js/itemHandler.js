@@ -1,13 +1,16 @@
+"use strict";
 let ajax = new XMLHttpRequest();
 ajax.onreadystatechange = receiveJson;
 
 function startAjax(form, value) {
-    "use strict";
-    let param = '../php/showItems.php?title=' + form.bookFilterName.value +
-        '&author=' + form.bookFilterAuthor.value +
-        '&publisher=' + form.bookFilterPublisher.value +
-        '&subareas=' + form.bookFilterSubareas.value +
-        '&rating=' + form.bookFilterRating.value;
+
+    let param = '../php/showItems.php?' +
+        'name=' + form.bikeFilterName.value +
+        '&maxPrice=' + form.bikeFilterPrice.value +
+        '&size=' + form.bikeFilterSize.value +
+        '&elektro=' + form.bikeFilterElektro.value +
+        '&beleuchtung=' + form.bikeFilterBeleuchtung.value;
+
 
     if (value.length > 0) {
         param += '&sort=' + value;
@@ -18,29 +21,34 @@ function startAjax(form, value) {
 
 function receiveJson() {
     "use strict";
-    let input = document.getElementById('bookList')
+    let input = document.getElementById('bikeList')
     if (ajax.readyState === 4) {
+        input.innerHTML = "";
         let result = JSON.parse(ajax.responseText);
-        let table = "<table class='table table-striped table-hover table-bordered'>";
 
-        table += "<tr>";
-        table += "<th>Titel</th>";
-        table += "<th>Autor</th>";
-        table += "<th>Verlag</th>";
-        table += "<th>Unterbereich</th>";
-        table += "<th>Bewertung</th>";
         for (let i = 0; i < result.length; i++) {
-            table += "<tr> <td>" + result[i].title + "</td>";
-            table += "<td>" + result[i].author + "</td>";
-            table += "<td>" + result[i].publisher + "</td>";
-            table += "<td>" + result[i].subareas + "</td>";
-            table += "<td>" + result[i].rating + "</td> </tr>";
+            input.innerHTML +=
+                '<div class="item">' +
+                    '<div class="header">' +
+                       '<p id="title">' + result[i].bezeichnung + '</p>' +
+                        '<p id="type">' + result[i].typ + '</p>' +
+                        '<p id="price"><span class="price">' + result[i].preis + '€</span>' + '</p>' +
+                    '</div>' +
+                    '<img src="../img/' + result[i].bild + '" alt="Bild von ' + result[i].bild + '">' +
+                    '<div class="eigenschaften">' +
+                        '<ul>' +
+                        '<ul>Rahmengröße: ' + result[i].groesse + '</ul>' +
+                        '<ul>Farbe: ' + result[i].farbe + '</ul>' +
+                        '<ul>Gänge: ' + result[i].gaenge + '</ul>' +
+                        '<ul>Gewicht: ' + result[i].gewicht + '</ul>' +
+                        '<ul>Elektro: ' + result[i].elektro + '</ul>' +
+                        '<ul>Beleuchtung: ' + result[i].beleuchtung + '</ul>' +
+                        '<ul>Rahmenhoehe: ' + result[i].rahmenhoehe + '</ul>' +
+                    '</div>' +
+                '</div>';
         }
-        input.innerHTML += "<br>";
-        input.innerHTML = table;
-        input.innerHTML += result;
-
     } else {
         input.innerHTML = "Lade...";
+        input.innerHTML += ajax.responseText;
     }
 }
