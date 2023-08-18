@@ -7,15 +7,16 @@ class Bike {
     public string $gewicht;
     public string $groesse;
     public string $gaenge;
-    public bool $elektro;
+    public string $elektro;
     public string $bremse;
     public string $beleuchtung;
     public string $bild;
     public string $rahmenhoehe;
+    public string $farbe;
 
     public function __construct($typ, $bezeichnung, $preis, $gewicht,
                                 $groesse, $gaenge, $elektro, $bremse,
-                                $beleuchtung, $bild, $rahmenhoehe) {
+                                $beleuchtung, $bild, $rahmenhoehe, $farbe) {
 
         $this->typ = $typ;
         $this->bezeichnung = $bezeichnung;
@@ -28,5 +29,6 @@ class Bike {
         $this->beleuchtung = $beleuchtung;
         $this->bild = $bild;
         $this->rahmenhoehe = $rahmenhoehe;
+        $this->farbe = $farbe;
     }
 }

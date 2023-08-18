@@ -2,34 +2,71 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>DBMS</title>
+    <title>Mein Bikeshop</title>
     <script src="../js/itemHandler.js"></script>
     <link href="../css/style.css" rel="stylesheet">
 </head>
 <body>
+<header>
+    <h1>Mein Bikeshop</h1>
+    <div class="nav">
+        <p>
+            <a href="">Home</a>
+        </p>
+        <p>
+            <a href="">Über uns</a>
+        </p>
+        <p>
+            <a href="">Kontakt</a>
+        </p>
+        <p>
+            <a href="">Impressum</a>
+        </p>
+    </div>
 
-<form>
+</header>
+
+<form class="leftMenu">
     <fieldset>
         <legend>Filter</legend>
-        Name: <input name="bikeFilterName" type="text" value=""> <br>
-        Max-Preis: <input name="bikeFilterPrice" type="range" min="1" max="5000" oninput="this.nextElementSibling.value = this.value"> <output>0</output>€ <br>
-        Größe: <input name="bikeFilterSize" type="number" min="0" value="0"> <br>
-        Elektroantrieb: <input name="bikeFilterElektro" type="checkbox"> <br>
-        Beleuchtung: <input name="bikeFilterBeleuchtung" type="checkbox"> <br>
+        <label>
+            Name:
+            <input name="bikeFilterName" type="text" value="">
+        </label> <br>
+        <label>
+            Max-Preis:
+            <input name="bikeFilterPrice" type="range" min="0" max="5000" value="0" step="100"
+                   oninput="this.nextElementSibling.value = this.value">
+            <output>0</output>€
+            <br>
+        </label>
+        <label>
+
+            <div id="sizeComboBox">
+            </div>
+        </label>
+        <label>
+            Elektroantrieb:
+            <input name="bikeFilterElektro" type="checkbox" onchange=onValueChange(this)>
+        </label > <br>
+        <label>
+            Beleuchtung:
+            <input name="bikeFilterBeleuchtung" type="checkbox" onchange=onValueChange(this)>
+        </label> <br>
         <br>
-        <input onclick="startAjax(this.form, '')" type="button" value="submit">
+        <input onclick="startAjax(this.form, '')" type="button" value="Suchen">
     </fieldset>
-    <fieldset>
-        <legend>Sort</legend>
-        <input name="bikeSort" onclick="startAjax(this.form, this.value)" type="button" value="name">
-        <input name="bikeSort" onclick="startAjax(this.form, this.value)" type="button" value="preis">
-        <input name="bikeSort" onclick="startAjax(this.form, this.value)" type="button" value="gewicht">
+    <fieldset id="sortButtons">
+        <legend>Sortieren nach</legend>
+        <input name="bikeSort" onclick="startAjax(this.form, this.value)" type="button" value="Name">
+        <input name="bikeSort" onclick="startAjax(this.form, this.value)" type="button" value="Preis">
+        <input name="bikeSort" onclick="startAjax(this.form, this.value)" type="button" value="Gewicht">
     </fieldset>
 
-    <div id="bikeList">
-        <h1>Start</h1>
-    </div>
 </form>
+<div id="bikeList">
+
+</div>
 
 </body>
 </html>

@@ -2,15 +2,59 @@
 let ajax = new XMLHttpRequest();
 ajax.onreadystatechange = receiveJson;
 
+let checkboxElektro = false;
+let checkboxBeleuchtung = false;
+let selectedSize = '';
+
+createComboBox();
+startAjax('', '');
+
+function createComboBox() {
+    "use strict";
+
+    fetch('../php/createComboBox.php')
+        .then(response => response.json())
+        .then(result => {
+            let combobox = "Größe: ";
+            combobox += "<select name='bikeFilterSize'>"
+            result.forEach(size => {
+                combobox += `<option value="${size}">${size}</option>`;
+            });
+            combobox += "</select>";
+
+            document.getElementById('sizeComboBox').innerHTML = combobox;
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+function onValueChange(checkbox) {
+    if (checkbox.name === "bikeFilterElektro") {
+        checkboxElektro = checkbox.checked;
+    } else if (checkbox.name === "bikeFilterBeleuchtung") {
+        checkboxBeleuchtung = checkbox.checked;
+    }
+}
+
+
 function startAjax(form, value) {
+    "use strict";
+    if (form === '') {
+
+        ajax.open('GET', '../php/showItems.php', true);
+        ajax.send();
+        return;
+    }
+    let $maxPrice = parseInt(form.bikeFilterPrice.value);
+
+    if ($maxPrice === 0) {
+        $maxPrice = 999999;
+    }
 
     let param = '../php/showItems.php?' +
         'name=' + form.bikeFilterName.value +
-        '&maxPrice=' + form.bikeFilterPrice.value +
+        '&maxPrice=' + $maxPrice +
         '&size=' + form.bikeFilterSize.value +
-        '&elektro=' + form.bikeFilterElektro.value +
-        '&beleuchtung=' + form.bikeFilterBeleuchtung.value;
-
+        '&elektro=' + checkboxElektro +
+        '&beleuchtung=' + checkboxBeleuchtung;
 
     if (value.length > 0) {
         param += '&sort=' + value;
@@ -48,7 +92,8 @@ function receiveJson() {
                 '</div>';
         }
     } else {
-        input.innerHTML = "Lade...";
-        input.innerHTML += ajax.responseText;
+        if (input !== null) {
+            input.innerHTML += ajax.responseText;
+        }
     }
 }

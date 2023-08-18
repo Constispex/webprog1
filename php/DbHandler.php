@@ -7,7 +7,7 @@ class DbHandler {
     /**
      * Converts a mysqli_result to an array of Book objects
      * @param $result mysqli_result
-     * @return array of Book objects
+     * @return array of Bike objects
      */
     private function resultToArray(mysqli_result $result): array {
         $items = array();
@@ -15,13 +15,24 @@ class DbHandler {
             while ($row = $result->fetch_assoc()) {
                 $item = new Bike($row["TYP"], $row["BEZ"], $row["PREIS"], $row["GEWICHT"],
                     $row["RADGROESSE"], $row["GAENGE"], $row["ELEKTRO"], $row["BREMSE"],
-                    $row["BELEUCHTUNG"], $row["BILD"], $row["RAHMENHOEHE"]);
+                    $row["BELEUCHTUNG"], $row["BILD"], $row["RAHMENHOEHE"], $this->getColor($row["PINDEX"]));
                 $items[] = $item;
             }
         }
         return $items;
     }
 
+    private function getColor($pIndex): string {
+        $result = $this->executeQuery("SELECT FARBE FROM farbe WHERE FINDEX = " . $pIndex . ";");
+        if ($result->num_rows > 0) {
+            $res = "";
+            while ($row = $result->fetch_assoc()) {
+                $res .= $row["FARBE"] . " ";
+            }
+            return $res;
+        }
+        return "n.A.";
+    }
     /**
      * Executes a query and returns the result
      * @param $query string
@@ -38,7 +49,7 @@ class DbHandler {
     }
 
     /**
-     * @return array of Book objects
+     * @return array of Bike objects
      */
     public function getFilteredItems($filters): array {
         $query = "SELECT * FROM fahrrad";

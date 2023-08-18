@@ -17,3 +17,9 @@ c
 3web-Aufgabenstellung/GridLayout/grid_vorlage2.xhtml,c\d\cd1513a0a7354d1049badfa25ee88616dcb81cb4
 c
 3web-Aufgabenstellung/GridLayout/grid_vorlage3a.html,d\3\d302959af7190f9501f9eac1c725c41255ec2b0a
+c
+3web-Aufgabenstellung/Beispiele/Ajax/Ajax_Listen.css,2\1\21028af0105dcac91c98f14f138992607e829b9c
+w
+G.idea/sonarlint/issuestore/2/b/2b9b1a6c8dbec5ee7f9573400762cba9727326fd,8\5\859dbc0966b3980fa30c56270bcfbb6e819724d3
+Å
+Q.idea/sonarlint/securityhotspotstore/2/b/2b9b1a6c8dbec5ee7f9573400762cba9727326fd,0\1\0196e276d062be7542f72671c041395209435f7d
